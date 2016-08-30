@@ -16,10 +16,16 @@ public class AgrovocServiceTest extends TestCase {
 		return new TestSuite(AgrovocServiceTest.class);
 	}
 
-	public void testApp() {
+	public void testTrue() {
 		AgrovocService service = AgrovocService.getInstance();
 		boolean response = service.verifyIfExistsLabel("Agricultura");
 		assertTrue(response);
+	}
+	
+	public void testFalse() {
+		AgrovocService service = AgrovocService.getInstance();
+		boolean response = service.verifyIfExistsLabel("Xuxu");
+		assertFalse(response);
 	}
 	
 }

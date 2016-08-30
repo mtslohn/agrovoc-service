@@ -1,6 +1,5 @@
 package br.ufsc.egc.agrovoc.service;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.algebra.Algebra;
 import org.apache.jena.sparql.algebra.Op;
 import org.apache.jena.sparql.algebra.op.OpBGP;
@@ -16,12 +14,12 @@ import org.apache.jena.sparql.core.BasicPattern;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.QueryIterator;
 import org.apache.jena.sparql.engine.ResultSetStream;
-import org.apache.jena.util.FileManager;
+import org.apache.jena.tdb.TDBFactory;
 import org.apache.log4j.Logger;
 
-public class AgrovocService {
+import br.ufsc.egc.agrovoc.service.util.tdb.AgrovocTDBCreator;
 
-	private static final String THESAURUS_FILE = "resources/agrovoc_2016-01-21_core.rdf";
+public class AgrovocService {
 
 	private static AgrovocService instance;
 
@@ -43,9 +41,10 @@ public class AgrovocService {
 	}
 
 	private void loadModel() {
-		model = ModelFactory.createDefaultModel();
-		InputStream thesaurusStream = FileManager.get().open(THESAURUS_FILE);
-		model.read(thesaurusStream, null, "RDF/XML");
+		model = TDBFactory.createDataset(AgrovocTDBCreator.TDB_DIRECTORY).getDefaultModel();
+		if (model.isEmpty()) {
+			model = new AgrovocTDBCreator().createTDB();
+		}
 	}
 
 	public boolean verifyIfExistsLabel(String label) {
