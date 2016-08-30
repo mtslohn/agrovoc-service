@@ -1,5 +1,6 @@
 package br.ufsc.egc.agrovoc.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class AgrovocService {
 	}
 
 	private void loadModel() {
+		File directory = new File(AgrovocTDBCreator.TDB_DIRECTORY);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
 		model = TDBFactory.createDataset(AgrovocTDBCreator.TDB_DIRECTORY).getDefaultModel();
 		if (model.isEmpty()) {
 			model = new AgrovocTDBCreator().createTDB();
