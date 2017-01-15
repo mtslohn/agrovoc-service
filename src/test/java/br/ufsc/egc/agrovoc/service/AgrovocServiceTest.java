@@ -15,17 +15,23 @@ public class AgrovocServiceTest extends TestCase {
 	public static Test suite() {
 		return new TestSuite(AgrovocServiceTest.class);
 	}
-
-	public void testTrue() {
-		AgrovocService service = AgrovocService.getInstance();
-		boolean response = service.verifyIfExistsLabel("Agricultura");
-		assertTrue(response);
-	}
+//
+//	public void testTrue() {
+//		AgrovocService service = AgrovocService.getInstance();
+//		boolean response = service.verifyIfExistsLabel("Agricultura");
+//		assertTrue(response);
+//	}
+//	
+//	public void testFalse() {
+//		AgrovocService service = AgrovocService.getInstance();
+//		boolean response = service.verifyIfExistsLabel("Xuxu");
+//		assertFalse(response);
+//	}
 	
-	public void testFalse() {
+	public void testParent() {
 		AgrovocService service = AgrovocService.getInstance();
-		boolean response = service.verifyIfExistsLabel("Xuxu");
-		assertFalse(response);
+		boolean response = service.isParent("Milho", "Produto");
+		assertTrue(response);
 	}
 	
 }
