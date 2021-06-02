@@ -1,2 +1,7 @@
 /target/
 /resources/
+/.settings/
+/.idea/
+.project
+.classpath
+agrovoc-service.iml
